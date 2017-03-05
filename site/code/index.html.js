@@ -205,17 +205,19 @@ An example of a hello world GraphQL schema and query with \`sangria\`:
 import sangria.schema._
 import sangria.execution._
 import sangria.macros._
+import scala.concurrent.ExecutionContext.Implicits.global
 
-val QueryType = ObjectType("Query", fields[Unit, Unit](
-  Field("hello", StringType, resolve = _ ⇒ "Hello world!")
-))
+object HelloWorld extends App {
+	val QueryType = ObjectType("Query", fields[Unit, Unit](
+	  Field("hello", StringType, resolve = _ ⇒ "Hello world!")
+	))
 
-val schema = Schema(QueryType)
+	val schema = Schema(QueryType)
 
-val query = graphql"{ hello }"
+	val query = graphql"{ hello }"
 
-Executor.execute(schema, query) map println
-\`\`\`
+	Executor.execute(schema, query) map println
+}
 
 ### Java
 
